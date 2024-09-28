@@ -1,6 +1,6 @@
 package com.vinayshenoy.json_parser.test.ast
 
-import com.vinaysshenoy.json_parser.ast.AstNode
+import com.vinaysshenoy.json_parser.ast.AstNode.*
 import com.vinaysshenoy.json_parser.ast.JsonAst
 import com.vinaysshenoy.json_parser.ast.JsonAstParser
 import strikt.api.expectThat
@@ -24,6 +24,18 @@ class AstParserTest {
         val ast = parse(json)
 
         // then
-        expectThat(ast.root).isA<AstNode.JsonObject>()
+        expectThat(ast.root).isA<JsonObject>()
+    }
+
+    @Test
+    fun `it should parse an empty json array`() {
+        // given
+        val json = "[]"
+
+        // when
+        val ast = parse(json)
+
+        // then
+        expectThat(ast.root).isA<JsonArray>()
     }
 }
