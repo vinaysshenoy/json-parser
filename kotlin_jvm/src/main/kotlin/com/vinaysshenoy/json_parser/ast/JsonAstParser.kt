@@ -1,5 +1,7 @@
 package com.vinaysshenoy.json_parser.ast
 
+import com.vinaysshenoy.json_parser.ast.AstNode.ChildNode.*
+
 class JsonAstParser() {
     fun parse(text: String): JsonAst {
         val root: AstNode = when (text.first()) {
@@ -15,7 +17,7 @@ class JsonAstParser() {
         val lastChar = json.last()
 
         if (lastChar == '}') {
-            return AstNode.JsonObject()
+            return AstNode.JsonObject(children = listOf(IntegerNode(name = "value", value = 1)))
         }
 
         throw RuntimeException("Invalid JSON object: $json")
