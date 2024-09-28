@@ -70,4 +70,31 @@ class JsonTokenizerTest {
             EndObject
         )
     }
+
+    @Test
+    fun `it should be able to tokenize multiple integer properties`() {
+        // given
+        val json = """
+            {
+                "breakfast": 0830,
+                "secondBreakfast": 10,
+                "elevenses": 1130
+            }
+        """.trimIndent()
+
+        // when
+        val tokens = tokenize(json)
+
+        // then
+        expectThat(tokens).containsExactly(
+            BeginObject,
+            PropertyName("breakfast"),
+            LongValue(830),
+            PropertyName("secondBreakfast"),
+            LongValue(10),
+            PropertyName("elevenses"),
+            LongValue(1130),
+            EndObject
+        )
+    }
 }

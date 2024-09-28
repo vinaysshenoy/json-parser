@@ -16,6 +16,13 @@ class JsonTokenizer {
             when {
                 currentChar == '{' -> tokens.add(BeginObject)
                 currentChar.isWhitespace() -> {}
+                currentChar == ',' -> {
+                    val lastToken = tokens.last()
+
+                    if (!lastToken.isValueToken()) {
+                        throw RuntimeException("Invalid JSON: $json, index[$currentCharIndex]")
+                    }
+                }
                 currentChar == ':' -> {
                     val (integerString, totalCharactersParsed) = extractIntString(json, currentCharIndex + 1)
 
