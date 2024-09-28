@@ -3,6 +3,8 @@ package com.vinayshenoy.json_parser.test.ast
 import com.vinaysshenoy.json_parser.ast.AstNode.*
 import com.vinaysshenoy.json_parser.ast.JsonAst
 import com.vinaysshenoy.json_parser.ast.JsonAstParser
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import strikt.api.expectThat
 import strikt.assertions.isA
 import kotlin.test.Test
@@ -15,27 +17,37 @@ private fun parse(json: String): JsonAst {
 
 class AstParserTest {
 
-    @Test
-    fun `it should parse an empty json object`() {
-        // given
-        val json = "{}"
+    @Nested
+    @DisplayName("Parse JSON objects")
+    inner class JsonObjectTests {
 
-        // when
-        val ast = parse(json)
+        @Test
+        fun `it should parse an empty json object`() {
+            // given
+            val json = "{}"
 
-        // then
-        expectThat(ast.root).isA<JsonObject>()
+            // when
+            val ast = parse(json)
+
+            // then
+            expectThat(ast.root).isA<JsonObject>()
+        }
     }
 
-    @Test
-    fun `it should parse an empty json array`() {
-        // given
-        val json = "[]"
+    @Nested
+    @DisplayName("Parse JSON arrays")
+    inner class JsonArrayTests {
 
-        // when
-        val ast = parse(json)
+        @Test
+        fun `it should parse an empty json array`() {
+            // given
+            val json = "[]"
 
-        // then
-        expectThat(ast.root).isA<JsonArray>()
+            // when
+            val ast = parse(json)
+
+            // then
+            expectThat(ast.root).isA<JsonArray>()
+        }
     }
 }
