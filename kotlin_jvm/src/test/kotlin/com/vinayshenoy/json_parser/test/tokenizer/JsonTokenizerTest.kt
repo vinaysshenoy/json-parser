@@ -28,4 +28,46 @@ class JsonTokenizerTest {
         // then
         expectThat(tokens).containsExactly(BeginObject, EndObject)
     }
+
+    @Test
+    fun `it should tokenize an integer property`() {
+        // given
+        val json = """
+            {
+                "count": 123
+            }
+        """.trimIndent()
+
+        // when
+        val tokens = tokenize(json)
+
+        // then
+        expectThat(tokens).containsExactly(
+            BeginObject,
+            PropertyName("count"),
+            LongValue(123),
+            EndObject
+        )
+    }
+
+    @Test
+    fun `it should tokenize a single digit integer property`() {
+        // given
+        val json = """
+            {
+                "count": 1
+            }
+        """.trimIndent()
+
+        // when
+        val tokens = tokenize(json)
+
+        // then
+        expectThat(tokens).containsExactly(
+            BeginObject,
+            PropertyName("count"),
+            LongValue(1),
+            EndObject
+        )
+    }
 }
