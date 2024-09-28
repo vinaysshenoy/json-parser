@@ -2,7 +2,7 @@ package com.vinaysshenoy.json_parser.ast
 
 class JsonAstParser() {
     fun parse(text: String): JsonAst {
-        val root: AstNode = when (text[0]) {
+        val root: AstNode = when (text.first()) {
             '{' -> parseJsonObject(text)
             '[' -> parseJsonArray(text)
             else -> throw RuntimeException("Could not parse:\n$text")
@@ -12,10 +12,22 @@ class JsonAstParser() {
     }
 
     private fun parseJsonObject(json: String): AstNode {
-        return AstNode.JsonObject()
+        val lastChar = json.last()
+
+        if (lastChar == '}') {
+            return AstNode.JsonObject()
+        }
+
+        throw RuntimeException("Invalid JSON object: $json")
     }
 
     private fun parseJsonArray(json: String): AstNode {
-        return AstNode.JsonArray()
+        val lastChar = json.last()
+
+        if (lastChar == ']') {
+            return AstNode.JsonArray()
+        }
+
+        throw RuntimeException("Invalid JSON array: $json")
     }
 }
